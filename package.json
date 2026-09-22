@@ -1,0 +1,29 @@
+{
+  "name": "hotelbookingapi",
+  "version": "0.0.1",
+  "description": "Secure role-based Hotel Booking API",
+  "keywords": [
+    "JWT",
+    "Express.js",
+    "Sockets.io",
+    "Postgrestsql"
+  ],
+  "homepage": "https://github.com/Dav27-tech/HotelBookingAPI#readme",
+  "bugs": {
+    "url": "https://github.com/Dav27-tech/HotelBookingAPI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dav27-tech/HotelBookingAPI.git"
+  },
+  "license": "MIT",
+  "author": "David <Dav27-tech>",
+  "type": "module",
+  "main": "src/api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
