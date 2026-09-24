@@ -21,9 +21,23 @@
   "type": "module",
   "main": "src/api.js",
   "scripts": {
+    "start": "node src/api.js",
+    "dev": "nodemon src/api.js",
+    "dev-dep": "npm install && npm install nodemon morgan eslint eslint-config-prettier eslint-plugin-prettier prettier --save-dev -D",
+    "env-var": "cp ./env/.envexample ./.env && echo \"Environment variables injected\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.3",
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "morgan": "^1.12.1",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.9.9"
   }
 }
