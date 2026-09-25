@@ -1,0 +1,57 @@
+services:
+  hotel-booking-db:
+    image: postgres:16
+    container_name: hotel-booking-db
+    restart: always
+    command: ["postgres", "-c", "timezone=UTC", "-c", "log_timezone=UTC"]
+    environment:
+      TZ: UTC
+      PGTZ: UTC
+      PGPORT: ${DB_CONTAINER_PORT}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:${DB_CONTAINER_PORT}"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -p $${PGPORT}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - hotel-booking-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: hotel-booking-rdbms
+    restart: always
+    environment:
+      TZ: UTC
+      PGADMIN_LISTEN_PORT: ${PGADMIN_CONTAINER_PORT}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "${PGADMIN_PORT}:${PGADMIN_CONTAINER_PORT}"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      hotel-booking-db:
+        condition: service_healthy
+    networks:
+      - hotel-booking-network
+
+volumes:
+  pg_data:
+  pgadmin_data:
+
+networks:
+  hotel-booking-network:
+    driver: bridge
