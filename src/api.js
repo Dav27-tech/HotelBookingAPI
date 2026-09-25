@@ -36,6 +36,21 @@ if (config.trustProxyHops > 0) {
 // HTTP request logger middleware
 api.use(morgan("dev"));
 
+// Configure CORS to allow requests from the configured frontend origin.
+// Mounted before the body parsers and the routers so preflight OPTIONS
+// requests (which carry no apikey/Authorization headers) are answered here
+// and never reach checkApiKey.
+api.use(
+  cors({
+    origin: config.corsOrigin,
+    allowedHeaders: ["Content-Type", "Authorization", "apikey"],
+    // Headers the browser is allowed to read from the response:
+    // - X-Access-Token: the rotated JWT
+    // - Retry-After / RateLimit: rate-limit info on 429 responses
+    exposedHeaders: ["X-Access-Token", "Retry-After", "RateLimit"],
+  }),
+);
+
 // Middleware to parse URL-encoded data
 api.use(express.urlencoded({ extended: false }));
 // Middleware to parse JSON data
