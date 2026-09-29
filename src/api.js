@@ -13,8 +13,10 @@ import cors from "cors";
 import morgan from "morgan";
 // Function to test database connection
 import { testConnection } from "./libraries/DBConnection.js";
-// Import the IP adress and port from the network configuration module
+// Import the IP address and port from the network configuration module
 import { theIPAddress, port } from "./libraries/netConfig.js";
+// Import the configuration module
+import { config } from "./config/config.js";
 
 // Create the API with Express.js
 const api = express();
@@ -62,21 +64,17 @@ api.use(bodyParser.json());
 // Store in the constant the project dirname
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-api.get("/", (req, res) => {
-  res.send("IP adress and port working");
-});
-
-// Immediately Invoked function Expression (IEFE) to run the server
+// Immediately Invoked Function Expression (IIFE) to run the server
 (async () => {
-  // Await the API to start listening onj the specified IP adress and port
+  // Await the api to start listening on the specified IP address and port
   const createApi = await api.listen(port, theIPAddress, (req, res) => {
     // Log the server start information to the console
-    console.log(`server on port http://${theIPAddress}:${port}`);
+    console.log(`Server on port http://${theIPAddress}:${port}`);
   });
 })();
 
 // Test database connection
-// Call the function to ensure the datatbase connection is working
+// Call the function to ensure the database connection is working
 testConnection();
 
 // Export the API for the use in other files
