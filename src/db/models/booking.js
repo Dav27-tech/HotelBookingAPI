@@ -17,19 +17,17 @@ export const Booking = sequelize.define(
       unique: true,
       autoIncrement: true,
     },
-    guestId: {
+    guest: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "guest_id",
       references: {
         model: "user",
         key: "id",
       },
     },
-    roomId: {
+    room: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "room_id",
       references: {
         model: "room",
         key: "id",
