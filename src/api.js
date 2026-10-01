@@ -17,6 +17,8 @@ import { testConnection } from "./libraries/DBConnection.js";
 import { theIPAddress, port } from "./libraries/netConfig.js";
 // Import the configuration module
 import { config } from "./config/config.js";
+// Import the setup of the database entitites associations
+import { setAssociations } from "./db/models/index.js";
 
 // Create the API with Express.js
 const api = express();
@@ -72,6 +74,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     console.log(`Server on port http://${theIPAddress}:${port}`);
   });
 })();
+
+// Set up all Sequelize models associations before any database query is made
+// This is a memory-only operation and does not require an active DB connection
+setAssociations();
 
 // Test database connection
 // Call the function to ensure the database connection is working
