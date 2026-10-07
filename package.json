@@ -1,0 +1,56 @@
+{
+  "name": "hotelbookingapi",
+  "version": "0.0.1",
+  "description": "Secure role-based Hotel Booking API",
+  "keywords": [
+    "JWT",
+    "Express.js",
+    "Sockets.io",
+    "Postgrestsql"
+  ],
+  "homepage": "https://github.com/Dav27-tech/HotelBookingAPI#readme",
+  "bugs": {
+    "url": "https://github.com/Dav27-tech/HotelBookingAPI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dav27-tech/HotelBookingAPI.git"
+  },
+  "license": "MIT",
+  "author": "David <Dav27-tech>",
+  "type": "module",
+  "main": "src/api.js",
+  "scripts": {
+    "start": "node src/api.js",
+    "dev": "nodemon src/api.js",
+    "dev-dep": "npm install && npm install nodemon morgan eslint eslint-config-prettier eslint-plugin-prettier prettier --save-dev -D",
+    "env-var": "cp ./env/.envexample ./.env && echo \"Environment variables injected\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrations:generate": "sequelize-cli migration:generate --options-path .sequelizerc.cjs --name",
+    "migrations:run": "sequelize-cli db:migrate --options-path .sequelizerc.cjs",
+    "migrations:revert": "sequelize-cli db:migrate:undo --options-path .sequelizerc.cjs",
+    "migrations:delete": "sequelize-cli db:migrate:undo:all --options-path .sequelizerc.cjs",
+    "seed:generate": "sequelize-cli seed:generate --options-path .sequelizerc.cjs --name",
+    "seed:run": "sequelize-cli db:seed:all --options-path .sequelizerc.cjs",
+    "seed:revert": "sequelize-cli db:seed:undo --options-path .sequelizerc.cjs",
+    "seed:delete": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "pg": "^8.23.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8",
+    "sequelize-cli": "^6.6.5"
+  },
+  "devDependencies": {
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "morgan": "^1.12.1",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.9.9"
+  }
+}

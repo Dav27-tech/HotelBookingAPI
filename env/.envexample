@@ -1,0 +1,52 @@
+# -------------------------- API environment -----------------------------------
+
+NODE_ENV=development
+
+# Port where the Express API will run
+API_PORT=7799
+
+# -------------------------- ORM environment -----------------------------------
+
+# Database dialect (used by Sequelize)
+DIALECT=postgres
+
+# ------------------------ Database credentials --------------------------------
+
+# Database user, created by the PostgreSQL container on first start
+# (it is the superuser of the container and the user the API connects with)
+DB_USER=developer
+DB_PASSWORD=9ec2a3d32b383c54ad4126b54d470fdf36fa0f843bca0b90703e6ca598462d4c
+
+# Database name
+DB_NAME=hotel_booking_db
+
+# Database connection host/port (host port, used by the API from your machine)
+DB_HOST=127.0.0.1
+DB_PORT=5544
+
+# Port PostgreSQL listens on inside the container
+DB_CONTAINER_PORT=5432
+
+# ------------------------------ PgAdmin ---------------------------------------
+
+# PgAdmin credentials
+PGADMIN_EMAIL=developer@api.com
+PGADMIN_PASSWORD=b2c439621b604ab4e2dafe8d34b648d9e56116beaa2309d0a94d12f02297b258
+
+# Host port (open http://localhost:5050) and port pgAdmin listens on inside the container
+PGADMIN_PORT=5050
+PGADMIN_CONTAINER_PORT=80
+
+# ---------------------------- API secrets -------------------------------------
+
+# API key for endpoints requests
+API_KEY=2e9bc6c94a4cbdfe2a31d2df79103a5eb3702eaf5d7018d47a774e9540a8ec29
+# Secret key to hash the JWT tokens
+AUTH_API_JWT_SECRET_KEY=2e2ecbce601e7231740f546c38c3e23ebc3e91822ebb6d7633c72ad263b8e3bb
+
+# ---------------------------- Front-end APP -----------------------------------
+
+# Front-end application URL allowed by CORS
+CORS_ORIGIN=http://localhost:3355
+# Proxy hops in front of the API
+TRUST_PROXY_HOPS=0
