@@ -6,40 +6,40 @@ module.exports = {
     // UP - create the 'room_type' table
     await queryInterface.createTable("room_type", {
       id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
       },
       name: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
         unique: true,
       },
       description: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       price_per_night: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       max_occupancy: {
-        type: DataTypes.SMALLINT,
+        type: Sequelize.SMALLINT,
         allowNull: false,
       },
       amenities: {
-        type: DataTypes.JSONB,
+        type: Sequelize.JSONB,
         allowNull: false,
       },
       created_at: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updated_at: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
