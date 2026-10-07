@@ -36,6 +36,7 @@
     "seed:delete": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^18.0.3",
     "express": "^5.2.1",
