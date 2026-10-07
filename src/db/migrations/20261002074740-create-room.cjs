@@ -3,47 +3,51 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // UP - create the 'user' table
+    // UP - create the 'room' table
     await queryInterface.createTable("room", {
       id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
       },
       number: {
-        type: DataTypes.STRING(10),
+        type: Sequelize.STRING(10),
         allowNull: false,
         unique: true,
       },
       type: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "room_type",
           key: "id",
         },
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE",
       },
       floor: {
-        type: DataTypes.SMALLINT,
+        type: Sequelize.SMALLINT,
         allowNull: false,
       },
       status: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "room_status",
           key: "id",
         },
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE",
       },
       created_at: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updated_at: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
@@ -51,7 +55,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    // UP - create the 'room' table
+    // DOWN - drop the 'room' table
     await queryInterface.dropTable("room");
   },
 };
