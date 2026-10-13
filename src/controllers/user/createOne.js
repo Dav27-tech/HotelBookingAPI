@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { UserService } from "../../services/userServices.js";
 import { Boom } from "@hapi/boom";
+=======
+import { UserService } from '../../services/userServices.js';
+import Boom from '@hapi/boom';
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 /**
  * Controller function to create a new user.
@@ -29,6 +34,7 @@ import { Boom } from "@hapi/boom";
  */
 export const createOneUser = async (req, res, next) => {
   const newUser = {
+<<<<<<< HEAD
     firstName: req.body.firstName,
     middleName: req.body.middleName,
     firstLastName: req.body.firstLastName,
@@ -39,6 +45,18 @@ export const createOneUser = async (req, res, next) => {
     status: req.body.status,
     phones: req.body.phones,
     lastLogin: req.body.lastLogin,
+=======
+    firstName:        req.body.firstName,
+    middleName:       req.body.middleName,
+    firstLastName:    req.body.firstLastName,
+    secondLastName:   req.body.secondLastName,
+    email:            req.body.email,
+    password:         req.body.password,
+    role:             req.body.role,
+    status:           req.body.status,
+    phones:           req.body.phones,
+    lastLogin:        req.body.lastLogin,
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
   };
 
   const userManager = new UserService();
@@ -46,16 +64,31 @@ export const createOneUser = async (req, res, next) => {
   try {
     const response = await userManager.createOne(newUser);
 
+<<<<<<< HEAD
     if (response.status === "CREATED SUCCESSFULLY") {
       return res.status(201).json({
         success: true,
         message: "User created successfully",
+=======
+    if(response.status === 'CREATED SUCCESSFULLY') {
+      return res.status(201).json({
+        success: true,
+        message: 'User created successfully',
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
       });
     }
   } catch (err) {
     const boomError = Boom.boomify(err, {
+<<<<<<< HEAD
       message: "It is not possible to create the user in the database.",
     });
     next(boomError);
   }
 };
+=======
+      message: 'It is not possible to create the user in the database.'
+    });
+    next(boomError);
+  }
+}
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
