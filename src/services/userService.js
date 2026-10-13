@@ -12,7 +12,7 @@
 // import the user data model
 import { User } from "../db/models/user.js";
 // import the related catalog models needed to embed FK data as nested objects
-import { Role } from "../db/models/userRole.js";
+import { UserRole } from "../db/models/userRole.js";
 import { UserStatus } from "../db/models/userStatus.js";
 // import the child model that stores the user's phone numbers
 import { Phone } from "../db/models/phone.js";
@@ -63,7 +63,7 @@ export class UserService {
 
       const hash = await hashPassword(newUser.password);
 
-      const createUser = await User.create({
+      const createdUser = await User.create({
         firstName: newUser.firstName,
         middleName: newUser.middleName,
         firstLastName: newUser.firstLastName,
