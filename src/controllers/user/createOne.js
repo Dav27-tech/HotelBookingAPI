@@ -1,5 +1,5 @@
 import { UserService } from "../../services/userServices.js";
-import { Boom } from "@hapi/boom";
+import Boom from "@hapi/boom";
 
 /**
  * Controller function to create a new user.
@@ -50,6 +50,7 @@ export const createOneUser = async (req, res, next) => {
       return res.status(201).json({
         success: true,
         message: "User created successfully",
+        authentication: res.locals.newUserToken,
       });
     }
   } catch (err) {

@@ -1,5 +1,12 @@
 {
-  "ignore": [".git", ".node_modules/**/node_modules"],
-  "watch": ["src/**/*.js", "src/**/*.cjs", "src/**/*.mjs"],
+  "ignore": [
+    ".git",
+    ".node_modules/**/node_modules"
+  ],
+  "watch": [
+    "src/**/*.js",
+    "src/**/*.cjs",
+    "src/**/*.mjs"
+  ],
   "ext": "js,cjs,mjs,json,"
 }

@@ -1,10 +1,19 @@
 // Import the Sequelize instance from the database connection library
+<<<<<<< HEAD
 import { sequelize } from "../../libraries/DBConnection.js";
 // Import DataTypes from sequelize to define column types
 import { DataTypes } from "sequelize";
 
 // Define the name of the user status table
 export const USER_STATUS_TABLE = "user_status";
+=======
+import { sequelize } from '../../libraries/DBConnection.js';
+// Import DataTypes from sequelize to define column types
+import { DataTypes } from 'sequelize';
+
+// Define the name of the user status table
+export const USER_STATUS_TABLE = 'user_status';
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 // Define the status model
 export const UserStatus = sequelize.define(
@@ -43,7 +52,11 @@ export const UserStatus = sequelize.define(
       // By default automatically generate the value
       defaultValue: DataTypes.NOW,
       // Database column name
+<<<<<<< HEAD
       field: "created_at",
+=======
+      field: 'created_at',
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
     },
     // Last update date
     updatedAt: {
@@ -54,7 +67,11 @@ export const UserStatus = sequelize.define(
       // By default automatically generate the value
       defaultValue: DataTypes.NOW,
       // Database column name
+<<<<<<< HEAD
       field: "updated_at",
+=======
+      field: 'updated_at',
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
     },
   },
   // Sequelize table configuration
@@ -64,8 +81,15 @@ export const UserStatus = sequelize.define(
     // Specify the table name
     tableName: USER_STATUS_TABLE,
     // Specify the model name
+<<<<<<< HEAD
     modelName: "user_status",
     // Enable automatic timestamps
     timestamps: true,
   },
+=======
+    modelName: 'user_status',
+    // Enable automatic timestamps
+    timestamps: true,
+  }
+>>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 );
