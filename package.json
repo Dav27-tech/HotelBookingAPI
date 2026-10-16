@@ -1,29 +1,10 @@
 {
-<<<<<<< HEAD
-  "name": "hotelbookingapi",
-=======
   "name": "hotel-booking-api",
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
   "version": "0.0.1",
   "description": "Secure role-based Hotel Booking API",
   "keywords": [
     "JWT",
     "Express.js",
-<<<<<<< HEAD
-    "Sockets.io",
-    "Postgrestsql"
-  ],
-  "homepage": "https://github.com/Dav27-tech/HotelBookingAPI#readme",
-  "bugs": {
-    "url": "https://github.com/Dav27-tech/HotelBookingAPI/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dav27-tech/HotelBookingAPI.git"
-  },
-  "license": "MIT",
-  "author": "David <Dav27-tech>",
-=======
     "Socket.io",
     "PostgreSQL"
   ],
@@ -37,7 +18,6 @@
   },
   "license": "MIT",
   "author": "Cristian Camilo <Cristianco9>",
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
   "type": "module",
   "main": "src/api.js",
   "scripts": {
@@ -56,31 +36,22 @@
     "seed:delete": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@hapi/boom": "^10.0.1",
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^18.0.3",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.1",
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
-<<<<<<< HEAD
-=======
     "passport-jwt": "^4.0.1",
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
     "pg": "^8.23.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.8",
     "sequelize-cli": "^6.6.5"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "eslint": "^10.11.0",
-=======
     "eslint": "^10.12.0",
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
     "morgan": "^1.12.1",
