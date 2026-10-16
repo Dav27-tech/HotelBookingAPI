@@ -1,5 +1,5 @@
-import { UserService } from '../../services/userServices.js';
-import Boom from '@hapi/boom';
+import { UserService } from "../../services/userServices.js";
+import Boom from "@hapi/boom";
 
 /**
  * Controller function to retrieve a single user by its id.
@@ -21,7 +21,7 @@ export const listOneUser = async (req, res, next) => {
   const userId = req.body.userId;
 
   if (!userId) {
-    throw Boom.badRequest('No user identifier provided');
+    throw Boom.badRequest("No user identifier provided");
   }
 
   const userManager = new UserService();
@@ -29,16 +29,17 @@ export const listOneUser = async (req, res, next) => {
   try {
     const response = await userManager.listOne(userId);
 
-    if (response.status === 'USER FOUND SUCCESSFULLY') {
+    if (response.status === "USER FOUND SUCCESSFULLY") {
       return res.status(200).json({
         success: true,
-        message: 'User found successfully',
+        message: "User found successfully",
         user: userData,
+        authentication: res.locals.newUserToken,
       });
     }
   } catch (err) {
     const boomError = Boom.boomify(err, {
-      message: 'It is not possible to find the user in the database.'
+      message: "It is not possible to find the user in the database.",
     });
     next(boomError);
   }

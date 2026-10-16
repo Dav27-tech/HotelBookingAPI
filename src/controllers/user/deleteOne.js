@@ -1,5 +1,5 @@
-import { UserService } from '../../services/userServices.js';
-import Boom from '@hapi/boom';
+import { UserService } from "../../services/userServices.js";
+import Boom from "@hapi/boom";
 
 /**
  * Controller function to delete a user by its id.
@@ -20,7 +20,7 @@ export const deleteOneUser = async (req, res, next) => {
   const userId = req.body.userId;
 
   if (!userId) {
-    throw Boom.badRequest('No user identifier provided');
+    throw Boom.badRequest("No user identifier provided");
   }
 
   const userManager = new UserService();
@@ -28,15 +28,16 @@ export const deleteOneUser = async (req, res, next) => {
   try {
     const response = await userManager.deleteOne(userId);
 
-    if (response.status === 'DELETED SUCCESSFULLY') {
+    if (response.status === "DELETED SUCCESSFULLY") {
       return res.status(200).json({
         success: true,
-        message: 'User deleted successfully',
+        message: "User deleted successfully",
+        authentication: res.locals.newUserToken,
       });
     }
   } catch (err) {
     const boomError = Boom.boomify(err, {
-      message: 'It is not possible to delete the user in the database.'
+      message: "It is not possible to delete the user in the database.",
     });
     next(boomError);
   }

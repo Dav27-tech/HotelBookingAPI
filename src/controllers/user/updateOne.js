@@ -1,5 +1,5 @@
-import { UserService } from '../../services/userServices.js';
-import Boom from '@hapi/boom';
+import { UserService } from "../../services/userServices.js";
+import Boom from "@hapi/boom";
 
 /**
  * Controller function to update an existing user by its id.
@@ -25,7 +25,6 @@ import Boom from '@hapi/boom';
  * @returns {Promise<void>} - Sends a JSON response with the operation result and the rotated token.
  */
 export const updateOneUser = async (req, res, next) => {
-
   const userId = req.body.userId;
 
   const newUserData = {
@@ -39,11 +38,11 @@ export const updateOneUser = async (req, res, next) => {
   };
 
   if (!userId) {
-    throw Boom.badRequest('No user identifier provided');
+    throw Boom.badRequest("No user identifier provided");
   }
 
   if (!newUserData) {
-    throw Boom.badRequest('No user data provided');
+    throw Boom.badRequest("No user data provided");
   }
 
   const userManager = new UserService();
@@ -51,15 +50,16 @@ export const updateOneUser = async (req, res, next) => {
   try {
     const response = await userManager.updateOne(userId, newUserData);
 
-    if (response.status === 'UPDATED SUCCESSFULLY') {
+    if (response.status === "UPDATED SUCCESSFULLY") {
       return res.status(200).json({
         success: true,
-        message: 'User updated successfully',
+        message: "User updated successfully",
+        authentication: res.locals.newUserToken,
       });
     }
   } catch (err) {
     const boomError = Boom.boomify(err, {
-      message: 'It is not possible to update the user in the database.'
+      message: "It is not possible to update the user in the database.",
     });
     next(boomError);
   }

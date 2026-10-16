@@ -1,5 +1,5 @@
-import { UserService } from '../../services/userServices.js';
-import Boom from '@hapi/boom';
+import { UserService } from "../../services/userServices.js";
+import Boom from "@hapi/boom";
 
 /**
  * Controller function to update the last login timestamp of a user.
@@ -22,7 +22,7 @@ export const updateLastLoginUser = async (req, res, next) => {
   const userId = req.body.userId;
 
   if (!userId) {
-    throw Boom.badRequest('No user identifier provided');
+    throw Boom.badRequest("No user identifier provided");
   }
 
   const userManager = new UserService();
@@ -30,16 +30,18 @@ export const updateLastLoginUser = async (req, res, next) => {
   try {
     const response = await userManager.updateLastLogin(userId);
 
-    if (response.status === 'LAST LOGIN UPDATED SUCCESSFULLY') {
+    if (response.status === "LAST LOGIN UPDATED SUCCESSFULLY") {
       return res.status(200).json({
         success: true,
-        message: 'Last login updated successfully',
+        message: "Last login updated successfully",
+        authentication: res.locals.newUserToken,
       });
     }
   } catch (err) {
     const boomError = Boom.boomify(err, {
-      message: 'It is not possible to update the user last Login in the database.'
+      message:
+        "It is not possible to update the user last Login in the database.",
     });
     next(boomError);
   }
-}
+};
