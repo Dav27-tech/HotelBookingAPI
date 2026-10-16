@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Editor configuration, see https://editorconfig.org
 root = true
 
@@ -16,23 +15,4 @@ quote_type = single
 
 [*.md]
 max_line_length = off
-=======
-# Editor configuration, see https://editorconfig.org
-root = true
-
-[*]
-charset = utf-8
-indent_style = space
-indent_size = 2
-insert_final_newline = true
-trim_trailing_whitespace = true
-
-[*.js]
-[*.cjs]
-[*.mjs]
-quote_type = single
-
-[*.md]
-max_line_length = off
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 trim_trailing_whitespace = false
