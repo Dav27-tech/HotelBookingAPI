@@ -2,15 +2,17 @@ import { Router } from "express";
 
 // ----------------------------- Middlewares -----------------------------------
 
-<<<<<<< HEAD
-// -------------------------- Validator Schema ---------------------------------
-
-// ----------------------------- Controllers -----------------------------------
-import { createOneUser } from "../controllers/user/index.js";
-=======
 // Middleware that verifies the API key sent by the client app
-import { checkAPIkey } from '../middlewares/apiAuthHandler.js';
+import { checkAPIkey } from "../middlewares/apiAuthHandler.js";
+// Middleware that verifies the user JWT
+import { authAppVerifyToken } from "../middlewares/tokenHandlers/authAppTokenHandler.js";
+// Middleware that validate the user's role
+import { checkRole } from "../middlewares/checkRoleHandler.js";
+// Middleware that validate the Joi Schema
+import { validatorHandler } from "../middlewares/validatorHandler.js";
+
 // -------------------------- Validator Schema ---------------------------------
+import { userSchema } from "../schema/userSchema.js";
 
 // ----------------------------- Controllers -----------------------------------
 import {
@@ -21,9 +23,8 @@ import {
   deleteOneUser,
   listOneUser,
   findByEmailUser,
-  listAllUsers
-} from '../controllers/user/index.js';
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
+  listAllUsers,
+} from "../controllers/user/index.js";
 
 // Create a new Router instance dedicated to the user resource
 const userRouter = Router();
@@ -32,15 +33,18 @@ const userRouter = Router();
 // POST /create → Create a new user
 // Body: New user data
 // -----------------------------------------------------------------------------
-<<<<<<< HEAD
-userRouter.post("/create", createOneUser);
-=======
 userRouter.post(
-  '/create',
+  "/create",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  createOneUser
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.newUserData, "body"),
+  // Step 5: Delegate to the controller
+  createOneUser,
 );
 
 // -----------------------------------------------------------------------------
@@ -48,11 +52,17 @@ userRouter.post(
 // Body: User identifier and new user data
 // -----------------------------------------------------------------------------
 userRouter.put(
-  '/update',
+  "/update",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  updateOneUser
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.updateUserData, "body"),
+  // Step 5: Delegate to the controller
+  updateOneUser,
 );
 
 // -----------------------------------------------------------------------------
@@ -60,11 +70,17 @@ userRouter.put(
 // Body: User identifier and the full list of phone numbers
 // -----------------------------------------------------------------------------
 userRouter.put(
-  '/update-phones',
+  "/update-phones",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  updateUserPhones
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.updateUserPhones, "body"),
+  // Step 5: Delegate to the controller
+  updateUserPhones,
 );
 
 // -----------------------------------------------------------------------------
@@ -72,11 +88,17 @@ userRouter.put(
 // Body: User identifier
 // -----------------------------------------------------------------------------
 userRouter.post(
-  '/update-last-login',
+  "/update-last-login",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  updateLastLoginUser
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.getUserById, "body"),
+  // Step 5: Delegate to the controller
+  updateLastLoginUser,
 );
 
 // -----------------------------------------------------------------------------
@@ -84,11 +106,17 @@ userRouter.post(
 // Body: User identifier
 // -----------------------------------------------------------------------------
 userRouter.delete(
-  '/delete',
+  "/delete",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  deleteOneUser
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.getUserById, "body"),
+  // Step 5: Delegate to the controller
+  deleteOneUser,
 );
 
 // -----------------------------------------------------------------------------
@@ -96,11 +124,17 @@ userRouter.delete(
 // Body: User identifier
 // -----------------------------------------------------------------------------
 userRouter.post(
-  '/list-one',
+  "/list-one",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  listOneUser
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.getUserById, "body"),
+  // Step 5: Delegate to the controller
+  listOneUser,
 );
 
 // -----------------------------------------------------------------------------
@@ -108,11 +142,17 @@ userRouter.post(
 // Body: User email
 // -----------------------------------------------------------------------------
 userRouter.post(
-  '/find-by-email',
+  "/find-by-email",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  findByEmailUser
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Validate the payload schema
+  validatorHandler(userSchema.getByEmail, "body"),
+  // Step 5: Delegate to the controller
+  findByEmailUser,
 );
 
 // -----------------------------------------------------------------------------
@@ -120,12 +160,15 @@ userRouter.post(
 // Body:
 // -----------------------------------------------------------------------------
 userRouter.get(
-  '/list-all',
+  "/list-all",
   // Step 1: Verify the API key
   checkAPIkey,
-  // Step 2: Delegate to the controller
-  listAllUsers
+  // Step 2: Verify the session token
+  authAppVerifyToken,
+  // Step 3: Verify the user role
+  checkRole(["Administrator"]),
+  // Step 4: Delegate to the controller
+  listAllUsers,
 );
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 export default userRouter;

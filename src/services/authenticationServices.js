@@ -107,4 +107,66 @@ export class AuthenticationServices {
       });
     }
   }
+
+  /**
+   * Resets a user's password when they can't log in and don't remember
+   * their current password. Since the user isn't authenticated, this
+   * does NOT verify the old password (there's nothing to compare
+   * against from their side). Instead, it verifies identity using two
+   * independent unique fields the user should know — email, first name, and
+   * first last name — before allowing the password to be replaced. No token is
+   * issued or verified here: once the password is updated, the user
+   * simply logs in again with their new password through the normal
+   * login() flow.
+   *
+   * The new password is also rejected if it matches the user's current
+   * password, to prevent a no-op reset.
+   *
+   * @async
+   * @param {string} email - The user's registered email.
+   * @param {string} firstName - The user's registered first name.
+   * @param {string} firstLastName - The user's registered first last name.
+   * @param {string} newPassword - The new plain-text password to set.
+   * @returns {Promise<{status: string}>} Result object with a success status message.
+   * @throws {Boom} Throws `Boom.badRequest` if any argument is missing or if
+   * the new password matches the current one, `Boom.notFound` if no user
+   * matches the provided email, first name, first last name or a wrapped Boom
+   * error if the reset fails.
+   */
+  async resetPassword(email, firstName, firstLastName, newPassword) {
+    if (!email || !firstName || !firstLastName || !newPassword) {
+      throw Boom.badRequest(
+        "Email, first name, first last name, and new password must all be provided",
+      );
+    }
+
+    try {
+      const existingUser = await User.findOne({
+        where: { email, firstName, firstLastName },
+      });
+
+      if (!existingUser) {
+        throw Boom.notFound("No user was found matching the provided data.");
+      }
+
+      const isSameOld = await bcrypt.compare(
+        newPassword,
+        existingUser.password,
+      );
+
+      if (isSameOld) {
+        throw Boom.badRequest(
+          "The new password must be different from the previous password",
+        );
+      }
+
+      const hash = await hashPassword(newPassword);
+
+      await User.update({ password: hash }, { where: { id: existingUser.id } });
+
+      return { status: "PASSWORD RESET SUCCESSFULLY" };
+    } catch (err) {
+      throw Boom.boomify(err, { message: "Unable to reset the password." });
+    }
+  }
 }
