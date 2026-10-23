@@ -1,13 +1,7 @@
 // Import the ValidationError from Sequelize to handle ORM-specific errors
-<<<<<<< HEAD
 import { ValidationError } from "sequelize";
 // Import Boom for HTTP-friendly error objects
 import Boom from "@hapi/boom";
-=======
-import { ValidationError } from 'sequelize';
-// Import Boom for HTTP-friendly error objects
-import Boom from '@hapi/boom';
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 /**
  * Middleware to log errors.
@@ -21,11 +15,7 @@ import Boom from '@hapi/boom';
 export const logError = (err, req, res, next) => {
   // Pass the error to the next middleware
   next(err);
-<<<<<<< HEAD
 };
-=======
-}
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 /**
  * Middleware to handle generic errors.
@@ -40,15 +30,9 @@ export const errorHandler = (err, req, res, next) => {
   // Send a 500 Internal Server Error response with error details
   res.status(500).json({
     message: err.message,
-<<<<<<< HEAD
     stack: err.stack,
   });
 };
-=======
-    stack: err.stack
-  });
-}
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 /**
  * Middleware to handle Boom errors.
@@ -69,11 +53,7 @@ export const boomErrorHandler = (err, req, res, next) => {
     // Pass the error to the next middleware
     next(err);
   }
-<<<<<<< HEAD
 };
-=======
-}
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
 
 /**
  * Middleware to handle Sequelize ORM validation errors.
@@ -92,17 +72,9 @@ export const ORMErrorHandler = (err, req, res, next) => {
     res.status(409).json({
       statusCode: 409,
       message: err.name,
-<<<<<<< HEAD
       errors: err.errors,
-=======
-      errors: err.errors
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
     });
   }
   // Pass the error to the next middleware
   next(err);
-<<<<<<< HEAD
 };
-=======
-}
->>>>>>> 13b261be075e9cf2861cf2d9da8ee9103eaf3980
