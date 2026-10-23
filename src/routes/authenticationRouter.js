@@ -11,8 +11,11 @@ import {
   resetPasswordIpLimiter,
   resetPasswordAccountLimiter,
 } from "../middlewares/rateLimitHandler.js";
+// Middleware that validate the Joi Schema
+import { validatorHandler } from "../middlewares/validatorHandler.js";
 
 // -------------------------- Validator Schema ---------------------------------
+import { authenticationSchema } from "../schema/authenticationSchema.js";
 
 // ----------------------------- Controllers -----------------------------------
 import { login, resetPassword } from "../controllers/authentication/index.js";
@@ -31,7 +34,9 @@ authenticationRouter.post(
   // Step 2: Supervise the attempts quantity
   loginIpLimiter,
   loginAccountLimiter,
-  // Step 3: Delegate to the controller
+  // Step 3: Validate the payload schema
+  validatorHandler(authenticationSchema.loginData, "body"),
+  // Step 4: Delegate to the controller
   login,
 );
 
@@ -46,7 +51,9 @@ authenticationRouter.post(
   // Step 2: Supervise the attempts quantity
   resetPasswordIpLimiter,
   resetPasswordAccountLimiter,
-  // Step 3: Delegate to the controller
+  // Step 3: Validate the payload schema
+  validatorHandler(authenticationSchema.resetPasswordData, "body"),
+  // Step 4: Delegate to the controller
   resetPassword,
 );
 
