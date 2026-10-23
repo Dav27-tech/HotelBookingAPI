@@ -36,12 +36,16 @@
     "seed:delete": "sequelize-cli db:seed:undo:all --options-path .sequelizerc.cjs"
   },
   "dependencies": {
+    "@apollo/server": "^5.5.1",
     "@hapi/boom": "^10.0.1",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^18.0.3",
     "express": "^5.2.1",
     "express-rate-limit": "^8.7.1",
+    "graphql": "^16.14.2",
+    "graphql-scalars": "^2.0.1",
+    "joi": "^18.3.0",
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
