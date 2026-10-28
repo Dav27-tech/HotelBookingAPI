@@ -9,7 +9,7 @@ import { authAppVerifyToken } from "../middlewares/tokenHandlers/authAppTokenHan
 // Middleware that validate the user's role
 import { checkRole } from "../middlewares/checkRoleHandler.js";
 // Middleware that validate the Joi Schema
-import { validatorHandler } from "../middlewares/validatorHandler.js";
+import { validatorHandler } from "../middlewares/validatorsHandlers.js";
 
 // -------------------------- Validator Schema ---------------------------------
 import { userSchema } from "../schema/userSchema.js";

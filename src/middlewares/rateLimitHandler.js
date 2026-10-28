@@ -68,3 +68,15 @@ export const resetPasswordAccountLimiter = rateLimit({
     "Too many password reset attempts. Please try again later.",
   ),
 });
+
+// ------------------------------ GraphQL --------------------------------------
+// Coarse IP flood protection for /api/v1/graphql. Account-level brute-force
+// protection for login/resetPassword lives in the auth resolver.
+export const graphqlIpLimiter = rateLimit({
+  ...baseOptions,
+  windowMs: FIFTEEN_MINUTES,
+  limit: 600,
+  handler: tooManyRequests(
+    "Too many requests to /api/v1/graphql. Please slow down.",
+  ),
+});

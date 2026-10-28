@@ -1,33 +1,35 @@
 // Import necessary modules and dependencies
 // Express framework for creating the api
-import express from 'express';
+import express from "express";
 // function to manage files and directories since the node.js api
-import path from 'path';
+import path from "path";
 // function to have access to the directory or file path
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 // Middleware to handle body request
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
 // Middleware to cross origins request
-import cors from 'cors';
+import cors from "cors";
 // Middleware for logging HTTP requests
-import morgan from 'morgan';
+import morgan from "morgan";
 // Function to test database connection
-import { testConnection } from './libraries/DBConnection.js';
+import { testConnection } from "./libraries/DBConnection.js";
 // Import the IP address and port from the network configuration module
-import { theIPAddress, port } from './libraries/netConfig.js';
+import { theIPAddress, port } from "./libraries/netConfig.js";
 // Main router for the API
-import routerAPI from './routes/index.js';
+import routerAPI from "./routes/index.js";
+// Import the GraphQL with the Apollo server instance
+import { useGraphql } from "./graphql/index.js";
 // Import the configuration module
-import { config } from './config/config.js';
+import { config } from "./config/config.js";
 // Custom error handling middlewares
 import {
   logError,
   errorHandler,
   boomErrorHandler,
-  ORMErrorHandler
-} from './middlewares/errorHandler.js';
+  ORMErrorHandler,
+} from "./middlewares/errorHandler.js";
 // Import the setup of the database entities associations
-import { setAssociations } from './db/models/index.js';
+import { setAssociations } from "./db/models/index.js";
 
 // Create the API with Express.js
 const api = express();
@@ -39,7 +41,7 @@ const api = express();
 // Never use `true`: clients could then spoof X-Forwarded-For and dodge the
 // limiters. This must be set BEFORE any middleware that reads req.ip.
 if (config.trustProxyHops > 0) {
-  api.set('trust proxy', config.trustProxyHops);
+  api.set("trust proxy", config.trustProxyHops);
 }
 
 // -----------------------------------------------------------------------------
@@ -47,27 +49,46 @@ if (config.trustProxyHops > 0) {
 // -----------------------------------------------------------------------------
 
 // HTTP request logger middleware
-api.use(morgan('dev'));
+api.use(morgan("dev"));
 
 // Configure CORS to allow requests from the configured frontend origin.
 // Mounted before the body parsers and the routers so preflight OPTIONS
 // requests (which carry no apikey/Authorization headers) are answered here
 // and never reach checkAPIkey.
-api.use(cors({
-  origin: config.corsOrigin,
-  allowedHeaders: ['Content-Type', 'Authorization', 'apikey'],
-  // Headers the browser is allowed to read from the response:
-  // - X-Access-Token: the rotated JWT
-  // - Retry-After / RateLimit: rate-limit info on 429 responses
-  exposedHeaders: ['X-Access-Token', 'Retry-After', 'RateLimit'],
-}));
+const allowedOrigins = [
+  config.corsOrigin,
+  ...(config.env === "development"
+    ? [
+        "https://sandbox.embed.apollographql.com",
+        "https://studio.apollographql.com",
+      ]
+    : []),
+];
+
+api.use(
+  cors({
+    origin: allowedOrigins,
+    allowedHeaders: ["Content-Type", "Authorization", "apikey"],
+    // Headers the browser is allowed to read from the response:
+    // - X-Access-Token: the rotated JWT
+    // - Retry-After / RateLimit: rate-limit info on 429 responses
+    exposedHeaders: ["X-Access-Token", "Retry-After", "RateLimit"],
+  }),
+);
+
+// Middleware for parsing JSON bodies
+api.use(bodyParser.json());
+
+// GraphQL - Layer - mounted BEFORE body parsers because Apollo Server
+// parses the request stream itself. CORS stays above so preflights are
+// answered at the edge.
+await useGraphql(api);
 
 // Middleware to parse URL-encoded data
 api.use(express.urlencoded({ extended: false }));
+
 // Middleware to parse JSON data
 api.use(express.json());
-// Middleware for parsing JSON bodies
-api.use(bodyParser.json());
 
 // Static files path
 // Store in the constant the project dirname

@@ -3,86 +3,98 @@ scalar DateTime
 
 # ---------------------------------- Types -------------------------------------
 
-type UserRole       { id: ID! name: String! }
-type UserStatus     { id: ID! name: String! }
-type Phone          { id: ID! number: String! }
+type UserRole {
+  id: ID!
+  name: String!
+}
+type UserStatus {
+  id: ID!
+  name: String!
+}
+type Phone {
+  id: ID!
+  number: String!
+}
 
 type User {
-  id:               ID!
-  firstName:        String!
-  middleName:       String
-  firstLastName:    String!
-  secondLastName:   String
-  email:            String!
-  password          String!
-  role:             UserRole!
-  status:           UserStatus!
-  lastLogin:        DateTime!
-  phones:           [Phone!]!
-  createdAt         DateTime!
-  UpdatedAt         DateTime!
+  id: ID!
+  firstName: String!
+  middleName: String
+  firstLastName: String!
+  secondLastName: String
+  email: String!
+  password: String!
+  role: UserRole!
+  status: UserStatus!
+  lastLogin: DateTime!
+  phones: [Phone!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type AuthPayload {
-  token:            String!
-  user:             User!
+  token: String!
+  user: User!
 }
 
 type ResetPasswordResult {
-  success:          Boolean!
-  message:          String!
+  success: Boolean!
+  message: String!
 }
 
 # --------------------------------- Inputs -------------------------------------
 
 input LoginDto {
-  email:            String!
-  password:         String!
+  email: String!
+  password: String!
 }
 
 input ResetPasswordDto {
-  email:            String!
-  firstName         String!
-  firstLastName     String!
-  newPassword       String!
+  email: String!
+  firstName: String!
+  firstLastName: String!
+  newPassword: String!
 }
 
-input UserIdDto     { id: ID! }
+input UserIdDto {
+  id: ID!
+}
 
-input UserEmailDto  { email: String! }
+input UserEmailDto {
+  email: String!
+}
 
 input CreateUserDto {
-  firstName:        String!
-  middleName:       String
-  firstLastName:    String!
-  secondLastName:   String
-  email:            String!
-  password          String!
-  role:             ID!
-  status:           ID!
-  phones:           [Phone!]!
-  lastLogin:        DateTime
+  firstName: String!
+  middleName: String
+  firstLastName: String!
+  secondLastName: String
+  email: String!
+  password: String!
+  role: ID!
+  status: ID!
+  phones: [String!]!
+  lastLogin: DateTime
 }
 
 input UpdateUserDto {
-  firstName         String
-  middleName        String
-  firstLastName     String
-  secondLastName    String
-  email             String
-  role              ID
-  status            ID
+  firstNam: String
+  middleName: String
+  firstLastName: String
+  secondLastName: String
+  email: String
+  role: ID
+  status: ID
 }
 
 input UpdatePhonesDto {
-  id:               ID!
-  phones:           [String!]!
+  id: ID!
+  phones: [String!]!
 }
 
 # --------------------------------- Queries ------------------------------------
 
 type Query {
-
   "Profile of the currently authenticated user."
   me: User!
 
@@ -99,7 +111,6 @@ type Query {
 # ------------------------------- Mutations ------------------------------------
 
 type Mutation {
-
   "Authenticate with email + password. Public."
   login(dto: LoginDto!): AuthPayload!
 
@@ -109,7 +120,7 @@ type Mutation {
   "Create a new user. Administrator only."
   newUser(dto: CreateUserDto!): User!
 
-  "Update an existing user (partial)". Administrator only."
+  "Update an existing user (partial). Administrator only."
   updateUser(id: ID!, dto: UpdateUserDto!): User!
 
   "Replace a user's full phone collection. Administrator only."

@@ -83,4 +83,19 @@ export const userStatusId = /^\d{1,10}$/;
 // id ('id', INTEGER PK).
 export const userId = /^\d{1,10}$/;
 
-// ── Child: phone number ─────────────────────────────
+// ── Child: phone number ─────────────────────────────────────────────────────
+
+// phone.number ('number', VARCHAR(20), NOT NULL, UNIQUE).
+// International-friendly shape: an optional leading '+', followed by
+// 7–20 digits. This accommodates the test values from
+// hotel-booking-api.postman_collection.json (e.g. '123456789',
+// '0000000000') without hard-coding a country format — the hotel may
+// serve guests from any country, unlike the Certificates API which is
+// locked to Colombian numbering.
+export const userPhoneNumber = /^\+?\d{7,20}$/;
+
+// last_login ('last_login', DATE, NOT NULL) is intentionally NOT covered
+// by a RegEx — a text pattern can only check the FORMAT of a date, not
+// whether it is a real calendar date. The schema layer validates it with
+// Joi.date() instead, which performs full calendar checking (e.g. it
+// rejects '2024-02-30').

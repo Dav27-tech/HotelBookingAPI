@@ -33,9 +33,9 @@ export const buildContext = async ({ req, res }) => {
     authError: null,
   };
 
-  // Extract the authentication header from the incoming request.
+  // Extract the authorization header from the incoming request.
   // Optional chaining prevents errors if the headers object is missing.
-  const header = req.headers?.authentication;
+  const header = req.headers?.authorization;
 
   // Allow the request to continue without authentication credentials.
   // Protected resolvers must enforce authentication when required.

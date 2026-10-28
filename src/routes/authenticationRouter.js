@@ -12,7 +12,7 @@ import {
   resetPasswordAccountLimiter,
 } from "../middlewares/rateLimitHandler.js";
 // Middleware that validate the Joi Schema
-import { validatorHandler } from "../middlewares/validatorHandler.js";
+import { validatorHandler } from "../middlewares/validatorsHandlers.js";
 
 // -------------------------- Validator Schema ---------------------------------
 import { authenticationSchema } from "../schema/authenticationSchema.js";
